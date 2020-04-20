@@ -4,12 +4,13 @@
   "description": "tracking service for queclink GV500 device",
   "main": "server.js",
   "dependencies": {
+    "ejs": "^3.0.2",
     "express": "^4.17.1",
-    "ejs": "^3.0.2"
+    "mocha": "^7.1.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha test/test.js",
     "start": "node server.js"
   },
   "author": "",
