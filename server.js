@@ -18,6 +18,6 @@ app.post('/', function(req, res){
 });
 
 //Start the server and make it listen for connections
-app.listen(PORT, function() {
-    console.log('Server is running on PORT:', PORT);
+var listener = app.listen(process.env.PORT || PORT, function() {
+    console.log('Server is running on PORT:', listener.address().port);
 });
