@@ -1,12 +1,12 @@
 var express = require("express");
 var app = express();
-var bodyParser = require('body-parser');
 var mysql = require('mysql');
+var JSON5 = require('json5');
 
 var PORT = 3000;
 
 app.use(express.json({
-    extended: false
+  extended: false
 }));
 
 var con = mysql.createConnection({
@@ -22,15 +22,16 @@ con.connect(function(err) {
   console.log("Successfully connected to the database !");
 });
 
-app.use(bodyParser.json())
-
 app.get('/', function(req, res){
   res.render('index.ejs');
 });
 
 app.post('/', function(req, res){
-  var jsondata = JSON.stringify(req.body);
-  var objectValue = JSON.parse(jsondata);
+
+  console.log(req.body);
+
+  var objectValue = req.body;
+  
 
   console.log("latitude: " + objectValue['position.latitude']);
   console.log("longitude: " + objectValue['position.longitude']);
@@ -45,7 +46,7 @@ app.post('/', function(req, res){
   });
 
   res.render('testjson.ejs', {data: req.body}); // move this line to the future function requeting the database
-
+  res.end();
 });
 
 //Start the server and make it listen for connections
