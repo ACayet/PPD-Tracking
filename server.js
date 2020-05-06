@@ -33,9 +33,8 @@ app.post('/', function(req, res){
   var jsondata = req.body;
   var trackingValues = [];
 
-  for(var i=0; i< jsondata.length; i++){
-    trackingValues.push([jsondata[i].position.latitude,jsondata[i].position.longitude])
-  }
+  trackingValues.push([jsondata[i].position.latitude,jsondata[i].position.longitude]);
+
   con.query('INSERT INTO trackingData (latitude, longitude) VALUES ?', [values], function(err,result) {
     if(err) {
        res.send('Error in adding data to the database');
