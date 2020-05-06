@@ -29,22 +29,23 @@ app.get('/', function(req, res){
 });
 
 app.post('/', function(req, res){
-  console.log(req.body);
-  var jsondata = req.body;
-  var trackingValues = [];
+  var jsondata = JSON.stringify(req.body);
+  var objectValue = JSON.parse(jsondata);
 
-  trackingValues.push([jsondata[i].position.latitude,jsondata[i].position.longitude]);
+  console.log("latitude: " + objectValue['position.latitude']);
+  console.log("longitude: " + objectValue['position.longitude']);
 
-  con.query('INSERT INTO trackingData (latitude, longitude) VALUES ?', [values], function(err,result) {
+  con.query("INSERT INTO trackingData (latitude, longitude) VALUES ("+objectValue['position.latitude']+","+objectValue['position.longitude']+")", function(err,result) {
     if(err) {
-       res.send('Error in adding data to the database');
+      console.log('Error in adding data to the database');
     }
    else {
-       res.send('Success in adding data to the database');
+      console.log('Success in adding data to the database');
     }
   });
 
-  res.render('testjson.ejs', {data: req.body}); // move this line to the function requeting the database
+  res.render('testjson.ejs', {data: req.body}); // move this line to the future function requeting the database
+
 });
 
 //Start the server and make it listen for connections
