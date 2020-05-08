@@ -1,20 +1,24 @@
-var express = require("express");
-var app = express();
-var mysql = require('mysql');
-var JSON5 = require('json5');
+/**
+ * Import modules and config
+ * @requires
+ */
+const express = require("express");
+const mysql = require('mysql');
+require('dotenv').config()
+const fs = require('fs')
 
-var PORT = 3000;
+var app = express();
 
 app.use(express.json({
   extended: false
 }));
 
 var con = mysql.createConnection({
-  host: "81.249.248.36",
-  port: "8457",
-  user: "ppd",
-  password: "ppdraspberrypi",
-  database: "tracking"
+  host: process.env.DATABASE_HOST,
+  port: process.env.DATABASE_PORT,
+  user: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_BASE
 });
 
 con.connect(function(err) {
@@ -30,11 +34,11 @@ app.post('/', function(req, res){
 
   console.log(req.body);
 
-  var objectValue = req.body;
-  
+  var dataCar = JSON.parse(req.body);
+  console.log(dataCar);
 
-  console.log("latitude: " + objectValue['position.latitude']);
-  console.log("longitude: " + objectValue['position.longitude']);
+  console.log("latitude: " + dataCar[0]['position.latitude']);
+  console.log("longitude: " + dataCar[0]['position.longitude']);
 
   con.query("INSERT INTO trackingData (latitude, longitude) VALUES ("+objectValue['position.latitude']+","+objectValue['position.longitude']+")", function(err,result) {
     if(err) {
@@ -50,6 +54,6 @@ app.post('/', function(req, res){
 });
 
 //Start the server and make it listen for connections
-var listener = app.listen(process.env.PORT || PORT, function() {
+var listener = app.listen(process.env.PORT || 3000, function() {
     console.log('Server is running on PORT:', listener.address().port);
 });
