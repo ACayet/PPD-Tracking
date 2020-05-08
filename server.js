@@ -34,7 +34,7 @@ app.post('/', function(req, res){
 
   console.log(req.body);
 
-  var dataCar = JSON.parse(req.body);
+  var dataCar = req.body;
   console.log(dataCar);
 
   console.log("latitude: " + dataCar[0]['position.latitude']);
