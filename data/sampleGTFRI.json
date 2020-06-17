@@ -1,0 +1,23 @@
+[{
+    "channel.id": 26317,
+    "device.id": 938329,
+    "device.name": "ppd_tracker",
+    "device.type.id": 136,
+    "engine.ignition.status": true,
+    "engine.rpm": 770,
+    "ident": "864251020305466",
+    "message.buffered.status": false,
+    "movement.status": false,
+    "peer": "37.172.105.115:64501",
+    "position.hdop": 1,
+    "position.latitude": 48.58811,
+    "position.longitude": 2.217598,
+    "position.timestamp": 1592347464,
+    "protocol.id": 33,
+    "report.code": "GTFRI",
+    "report.reason": 0,
+    "secondary.battery.level": 0,
+    "server.timestamp": 1592347468.058546,
+    "timestamp": 1592347464,
+    "vehicle.state": "ignition on rest"
+}]

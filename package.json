@@ -2,19 +2,23 @@
   "name": "ppd-tracking",
   "version": "1.0.0",
   "description": "tracking service for queclink GV500 device",
-  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "mocha test/test.js"
+  },
   "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
     "dotenv": "^8.2.0",
-    "ejs": "^3.0.2",
-    "express": "^4.17.1",
+    "express": "~4.17.1",
+    "http-errors": "~1.7.3",
     "mocha": "^7.1.1",
-    "mysql": "^2.18.1"
+    "mongoose": "^5.9.19",
+    "morgan": "~1.9.1",
+    "pug": "^3.0.0"
   },
   "devDependencies": {},
-  "scripts": {
-    "test": "mocha test/test.js",
-    "start": "node server.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ACayet/PPD-Tracking.git"
