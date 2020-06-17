@@ -1,12 +1,14 @@
 const Gtfri = require('../models/trackingGTFRI.model')
 const Gtodb = require('../models/trackingGTODB.model')
+require("dotenv").config();
 
 var controller = {
     addDataTracking: (req, res, next) => {
 
         var dataCar = req.body
-
+        console.log(dataCar)
         var dbEntry;
+
 
         if(dataCar[0]["report.code"] == "GTOBD"){
             dbEntry = {
@@ -40,8 +42,6 @@ var controller = {
                 moteurAllumé: dataCar[0]["engine.ignition.status"],
                 statusVehicule: dataCar[0]["vehicle.state"]
             }
-            console.log(dataCar[0]["position.timestamp"])
-            console.log(dbEntry)
             Gtfri.create(dbEntry)
             .then(
                 (gtfri) => {
@@ -50,17 +50,22 @@ var controller = {
                 (err) => next(err)
             )
             .catch((err) => next(err));
-        } else {
-
+        } else{
+            res.statusCode = 201;
         }
 
-        console.log("latitude: " + dataCar[0]["position.latitude"]);
-        console.log("longitude: " + dataCar[0]["position.longitude"]);
-
-        res.render("testjson", { data: dataCar }); // move this line to the future function requeting the database
+        res.send({success: true})
     },
     mainPage: (req, res, next) => {
-        res.render("index", { title: "PPD-Tracking" });
+        Gtfri.find({}).sort({createdAt:-1}).limit(1).then(
+            (result) => {
+                //console.log(result[0]);
+                res.render("index", { title: "PPD-Tracking", data: result[0] , mapboxToken: process.env.MAPBOX_TOKEN});
+            },
+            (err) => next(err)
+        )
+        .catch((err) => next(err));
+        
     }
 };
 
