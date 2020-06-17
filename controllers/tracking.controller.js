@@ -1,6 +1,6 @@
 const Gtfri = require('../models/trackingGTFRI.model')
 const Gtodb = require('../models/trackingGTODB.model')
-const moment = require('moment')
+const moment = require('moment-timezone')
 require("dotenv").config();
 
 moment.locale('fr');

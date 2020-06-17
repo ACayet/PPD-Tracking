@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
   p Bienvenue sur #{title}
-  p Position mise à jour pour la derniere fois le #{moment(dataGTFRI.positionTimestamp).format("D/MM/YYYY à HH:mm")}
+  p Position mise à jour pour la derniere fois le #{moment(dataGTFRI.positionTimestamp).tz("Europe/Paris").format("D/MM/YYYY à HH:mm")}
   //p #{mapboxToken}
   #mapid(style='width: 1500px; height: 700px;')
   script.
