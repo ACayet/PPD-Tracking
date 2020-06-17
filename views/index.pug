@@ -2,12 +2,13 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Bienvenue sur #{title}
+  p Position mise à jour pour la derniere fois le #{moment(dataGTFRI.positionTimestamp).format("D/MM/YYYY à HH:mm")}
   //p #{mapboxToken}
   #mapid(style='width: 1500px; height: 700px;')
   script.
       //sets the view to the inital area
-      var mymap = L.map('mapid').setView([#{data.latitude}, #{data.longitude}], 16);
+      var mymap = L.map('mapid').setView([#{dataGTFRI.latitude}, #{dataGTFRI.longitude}], 16);
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 19,
@@ -16,7 +17,7 @@ block content
         zoomOffset: -1,
         accessToken: "#{mapboxToken}"
       }).addTo(mymap);
-      var marker = L.marker([#{data.latitude}, #{data.longitude}]).addTo(mymap);
-      var popUpHTML = '<b>#{data.nomDevice}</b>';
+      var marker = L.marker([#{dataGTFRI.latitude}, #{dataGTFRI.longitude}]).addTo(mymap);
+      var popUpHTML = '<b>#{dataGTFRI.nomDevice}</b>';
       marker.bindPopup(popUpHTML).openPopup()
       

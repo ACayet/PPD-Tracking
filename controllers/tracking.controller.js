@@ -1,6 +1,9 @@
 const Gtfri = require('../models/trackingGTFRI.model')
 const Gtodb = require('../models/trackingGTODB.model')
+const moment = require('moment')
 require("dotenv").config();
+
+moment.locale('fr');
 
 var controller = {
     addDataTracking: (req, res, next) => {
@@ -60,7 +63,7 @@ var controller = {
         Gtfri.find({}).sort({createdAt:-1}).limit(1).then(
             (result) => {
                 //console.log(result[0]);
-                res.render("index", { title: "PPD-Tracking", data: result[0] , mapboxToken: process.env.MAPBOX_TOKEN});
+                res.render("index", { title: "PPD-Tracking", dataGTFRI: result[0] , mapboxToken: process.env.MAPBOX_TOKEN, moment: moment });
             },
             (err) => next(err)
         )
