@@ -62,13 +62,27 @@ var controller = {
     mainPage: (req, res, next) => {
         Gtfri.find({}).sort({createdAt:-1}).limit(1).then(
             (result) => {
-                //console.log(result[0]);
-                res.render("index", { title: "PPD-Tracking", dataGTFRI: result[0] , mapboxToken: process.env.MAPBOX_TOKEN, moment: moment });
+                if(result.length>0){
+                    //console.log(result[0]);
+                    Gtodb.find({}).sort({createdAt:-1}).limit(1).then(
+                        (result2) => {
+                            if(result2.length>0){
+                                console.log("on est al")
+                                res.render("index", { title: "PPD-Tracking", dataGTFRI: result[0] , dataGTOBD: result2[0], mapboxToken: process.env.MAPBOX_TOKEN, moment: moment });
+                            }else{
+                                res.render("index", { title: "PPD-Tracking", dataGTFRI: result[0] , mapboxToken: process.env.MAPBOX_TOKEN, moment: moment });
+                            }
+                        },
+                        (err) => next(err)
+                    )
+                    .catch((err) => next(err));
+                }else{
+                    res.render("index", { title: "PPD-Tracking", mapboxToken: process.env.MAPBOX_TOKEN})
+                }
             },
             (err) => next(err)
         )
-        .catch((err) => next(err));
-        
+        .catch((err) => next(err));       
     }
 };
 

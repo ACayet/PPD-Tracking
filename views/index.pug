@@ -3,11 +3,14 @@ extends layout
 block content
   h1= title
   p Bienvenue sur #{title}
-  p Position mise à jour pour la derniere fois le #{moment(dataGTFRI.positionTimestamp).tz("Europe/Paris").format("D/MM/YYYY à HH:mm")}
+  if moment
+    p Position mise à jour pour la derniere fois le #{moment(dataGTFRI.positionTimestamp).tz("Europe/Paris").format("D/MM/YYYY à HH:mm")}
+  else
+    p Pas encore de données de tracking
   //p #{mapboxToken}
-  #mapid(style='width: 1500px; height: 700px;')
-  script.
-      //sets the view to the inital area
+  #mapid(style='width: 70%; height: 600px; float: left; display: inline-block;')
+  if dataGTFRI
+    script.
       var mymap = L.map('mapid').setView([#{dataGTFRI.latitude}, #{dataGTFRI.longitude}], 16);
       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -20,4 +23,17 @@ block content
       var marker = L.marker([#{dataGTFRI.latitude}, #{dataGTFRI.longitude}]).addTo(mymap);
       var popUpHTML = '<b>#{dataGTFRI.nomDevice}</b>';
       marker.bindPopup(popUpHTML).openPopup()
-      
+  else
+    script.
+      var mymap = L.map('mapid').setView([48.852966, 2.349902], 13);
+       L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 19,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: "#{mapboxToken}"
+      }).addTo(mymap);
+  if dataGTOBD
+    p.gtobd Vitesse : #{dataGTOBD.vitesseVehicule} km/h
+    p.gtobd Rotation du moteur : #{dataGTOBD.vitesseMoteur} tours par minutes
