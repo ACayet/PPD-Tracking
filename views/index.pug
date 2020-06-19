@@ -35,6 +35,11 @@ block content
         accessToken: "#{mapboxToken}"
       }).addTo(mymap);
   if dataGTOBD
+    if dataGTFRI.moteurAllumé == true
+      p.gtobd Le moteur est allumé
+    else 
+      p.gtobd Le moteur est eteint
     p.gtobd Vitesse : #{dataGTOBD.vitesseVehicule} km/h
     p.gtobd Rotation du moteur : #{dataGTOBD.vitesseMoteur} tours par minutes
     p.gtobd Temperature du liquide de refroidissement : #{dataGTOBD.temperatureLiquideRefroidissement} °C
+    
